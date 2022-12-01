@@ -35,6 +35,7 @@ class _CatagorayMealScreenState extends State<CatagorayMealScreen> {
     displayMeals=DUMMY_MEALS.where((element) {
       return element.categories.contains(widget.id);
     }).toList();
+    displayMeals=widget.availableMeal;
 
   }
 

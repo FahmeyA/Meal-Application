@@ -5,8 +5,9 @@ import 'package:meal_app/Widgets/main_drawer.dart';
 class Flitter_Screen extends StatefulWidget {
   static const filtterScreens='/fitterScreens';
 
-  final Function  saveFilters;
-  Flitter_Screen(this.saveFilters);
+  final Map<String,bool > cuurentFilter;
+  final Function(Map<String ,bool >)  saveFilters;
+  Flitter_Screen({required this.cuurentFilter,required this.saveFilters});
   @override
   State<Flitter_Screen> createState() => _Flitter_ScreenState();
 }
@@ -20,7 +21,19 @@ class _Flitter_ScreenState extends State<Flitter_Screen> {
 
    bool isVegetarian=false;
 
+@override
+  initState(){
+    super.initState();
+    isGlutenFree=widget.cuurentFilter['gluten']!;
+    isLactoseFree=widget.cuurentFilter['lactose']!;
+    isVegan=widget.cuurentFilter['vegan']!;
+    isVegetarian=widget.cuurentFilter['vegetarian']!;
 
+  }
+
+  initialFilterValue(){
+
+  }
 
     buildSwitch({
      required String title,
@@ -46,6 +59,13 @@ class _Flitter_ScreenState extends State<Flitter_Screen> {
         actions: [
           IconButton(
       onPressed: (){
+      final  _selectedFilters={
+          'gluten':isGlutenFree,
+          'lactose':isLactoseFree,
+          'vegan':isVegan,
+          'vegetarian':isVegetarian
+        };
+      widget.saveFilters(_selectedFilters);
 
       },
 

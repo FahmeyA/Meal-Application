@@ -1,45 +1,59 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:meal_app/color.dart';
 
+import '../Models/meal.dart';
 import '../Widgets/main_drawer.dart';
 import 'catagoray.dart';
 import 'favoirate_screen.dart';
 
 class TabsScreens extends StatefulWidget {
-  const TabsScreens({Key? key}) : super(key: key);
+  List<Meal2> filterListMeal;
+   TabsScreens({Key? key,required this.filterListMeal}) : super(key: key);
   static final homeScreen="/";
   @override
   State<TabsScreens> createState() => _TabsScreensState();
 }
 
 class _TabsScreensState extends State<TabsScreens> {
+  List<Meal2> meals = [];
 
 
-  int currentIndex=0;
+  int currentIndex = 0;
 
-   List<Map<String,dynamic>> _screen=[
+  initState() {
+    super.initState();
+
+    _screen=initialCatagray();
+  }
+
+
+
+   List<Map<String, dynamic>> ?_screen ;
+
+
+  initialCatagray() => [
     {
-      "screen":CatagoraiesScreen(availableMeal: [],),
-      "title":"Catagoray"
+      "screen": CatagoraiesScreen(availableMeal: widget.filterListMeal,),
+      "title": "Catagoray"
     },
     {
-      "screen":FavoirateScreen(),
-      "title":"Favorite"
+      "screen": FavoirateScreen(),
+      "title": "Favorite"
     }
 
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
-        title: Text(_screen[currentIndex]["title"],),
+        title: Text(_screen![currentIndex]["title"],),
       ),
 
-      body: _screen[currentIndex]["screen"],
+      body: _screen![currentIndex]["screen"],
 
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).primaryColor,

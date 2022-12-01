@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meal_app/route.dart';
 
 import 'Models/meal.dart';
-import 'Screen/catagoray.dart';
 import 'Screen/filtters_screen.dart';
 import 'Screen/meal_detail.dart';
 import 'Screen/tabs_screen.dart';
-import 'Widgets/constant.dart';
 import 'dummy_data.dart';
 
 void main() {
@@ -66,9 +63,9 @@ class _MyAppState extends State<MyApp> {
         //onGenerateRoute: RouteApp.generateRoute,
         initialRoute: '/',
       routes: {
-        '/':(context)=>TabsScreens(),
+        '/':(context)=>TabsScreens(filterListMeal: availableMeal,),
         MealDetail.mealDetailScreen:(context)=>MealDetail(),
-        Flitter_Screen. filtterScreens:(context)=>Flitter_Screen(_setFilters),
+        Flitter_Screen. filtterScreens:(context)=>Flitter_Screen(cuurentFilter:_filters,saveFilters:_setFilters),
       },
 
 
