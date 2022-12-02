@@ -16,7 +16,7 @@ class MealItem extends StatelessWidget {
   final Complexity1 complexity;
   final Affordability1 affordability;
   final Function(String ) removeItem;
-   MealItem({Key? key,
+   MealItem(this.removeItem,{
    required this.id,
      required this.title,
      required this.categories,
@@ -26,11 +26,11 @@ class MealItem extends StatelessWidget {
      required this.duration,
      required this.complexity,
      required this.affordability,
-     required this.removeItem
 
 
 
-  }) : super(key: key);
+
+  } ) ;
 
 
   String get complexityString {
@@ -61,6 +61,12 @@ class MealItem extends StatelessWidget {
   }
 
 
+  TextStyle style=TextStyle(
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: FontWeight.w500
+  );
+  Color color=Colors.black;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -74,6 +80,7 @@ class MealItem extends StatelessWidget {
        );
       },
       child: Card(
+        color:  Color(0XFFffFAEDF0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15)
         ),
@@ -102,17 +109,27 @@ class MealItem extends StatelessWidget {
 
 
                 Positioned(
-                  bottom: 20,
-                  right: 10,
+                  bottom: 0,
+                  right: -1,
                   child: Container(
                     width: 220,
-                    color: Colors.black54,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color:  Color(0XFFffFAEDF0),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+
+                      ),
+
+
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                     child: Text(title,
                       style: TextStyle(
                         fontSize: 23,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
+                      textAlign: TextAlign.center,
                       softWrap: true,
                       overflow: TextOverflow.fade,
 
@@ -121,39 +138,51 @@ class MealItem extends StatelessWidget {
                 )
               ],
             ),
-          Padding(padding: EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+          Container(
+            decoration: BoxDecoration(
 
-              Row(
-                children: [
-                  Icon(Icons.schedule),
-                  SizedBox(width: 5,),
-                  Text(" $complexityString")
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15),
 
-                ],
               ),
-              Row(
-                children: [
-                  Icon(Icons.work_outline),
-                  SizedBox(width: 5,),
-                  Text("duration  $duration")
 
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(Icons.attach_money_outlined),
-                  SizedBox(width: 5,),
+            ),
 
-                  Text("$affordabilityString")
+            child: Padding(padding: EdgeInsets.all(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
 
-                ],
-              )
+                Row(
+                  children: [
+                    Icon(Icons.schedule,color: color,),
+                    SizedBox(width: 5,),
+                    Text(" $complexityString",style: style,)
 
-            ],
-          ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.work_outline,color: color,),
+                    SizedBox(width: 5,),
+                    Text("duration  $duration",style: style,)
+
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.attach_money_outlined,color: color,),
+                    SizedBox(width: 5,),
+
+                    Text("$affordabilityString",style: style,)
+
+                  ],
+                )
+
+              ],
+            ),
+            ),
           )
           ],
         ),

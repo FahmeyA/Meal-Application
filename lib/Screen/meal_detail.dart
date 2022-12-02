@@ -1,13 +1,23 @@
 
 import 'package:flutter/material.dart';
 
+import '../Models/meal.dart';
 import '../color.dart';
 import '../dummy_data.dart';
 
-class MealDetail extends StatelessWidget {
+class MealDetail extends StatefulWidget {
   static final mealDetailScreen='/MealDetailScreen';
-  const MealDetail({Key? key}) : super(key: key);
 
+
+  final Function(String id) togglefavoriteMeal;
+  final Function(String id) isMealfavoriteMeal;
+   MealDetail({Key? key,required this.togglefavoriteMeal,required this.isMealfavoriteMeal}) : super(key: key);
+
+  @override
+  State<MealDetail> createState() => _MealDetailState();
+}
+
+class _MealDetailState extends State<MealDetail> {
   buildSliverAppBar(String id,String title,String imga){
     return SliverAppBar(
 
@@ -73,6 +83,7 @@ class MealDetail extends StatelessWidget {
 
 
   }
+
   @override
   Widget build(BuildContext context) {
     final mealDetailAgr=ModalRoute.of(context)?.settings.arguments as String;
@@ -80,6 +91,7 @@ class MealDetail extends StatelessWidget {
     final mealDetailList=DUMMY_MEALS.firstWhere((meal) =>
     mealDetailAgr==meal.id
     );
+    String mealId=mealDetailList.id;
 
     return SafeArea(
       child: Scaffold(
@@ -148,7 +160,7 @@ SizedBox(height: 20,),
 
 
                       child: ListView.builder(
-                        itemCount: mealDetailList.ingredients.length,
+                        itemCount: mealDetailList.steps.length,
                         itemBuilder: (context,index){
                           return Card(
                             child: Padding(
@@ -174,10 +186,13 @@ SizedBox(height: 20,),
 
             floatingActionButton: FloatingActionButton(
           onPressed: (){
-
-         Navigator.pop(context,mealDetailList.id);
+            widget.togglefavoriteMeal(mealDetailAgr);
+          setState((){
+            widget.isMealfavoriteMeal(mealDetailAgr);
+          });
           },
-      child: Icon(Icons.add),
+      child: Icon(widget.isMealfavoriteMeal(mealDetailAgr)?Icons.abc:Icons.favorite_outline),
+
 
       ),
 

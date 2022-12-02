@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'Models/meal.dart';
+import 'Screen/catagory_meal_screen.dart';
 import 'Screen/filtters_screen.dart';
 import 'Screen/meal_detail.dart';
 import 'Screen/tabs_screen.dart';
@@ -30,6 +31,8 @@ class _MyAppState extends State<MyApp> {
 
 
  List<Meal2> availableMeal=DUMMY_MEALS;
+  List<Meal2> favoriteMeal=[];
+
   void _setFilters(Map<String ,bool > _filtersData){
 
     setState((){
@@ -53,6 +56,23 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _toggleFavorite(String mealId){
+    final mealIndexReturn=favoriteMeal.indexWhere((meal) => meal.id==mealId);
+  if(mealIndexReturn>=0){
+ setState((){
+   favoriteMeal.removeAt(mealIndexReturn);
+ });
+  }
+  else{
+     favoriteMeal.add(DUMMY_MEALS.firstWhere((meal) =>meal.id==mealId ));
+  }
+
+  }
+
+  bool _isMealFavorite(String mealId){
+
+    return favoriteMeal.any((meal) => meal.id==mealId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +83,9 @@ class _MyAppState extends State<MyApp> {
         //onGenerateRoute: RouteApp.generateRoute,
         initialRoute: '/',
       routes: {
-        '/':(context)=>TabsScreens(filterListMeal: availableMeal,),
-        MealDetail.mealDetailScreen:(context)=>MealDetail(),
+        '/':(context)=>TabsScreens(filterListMeal: availableMeal,favoriterListMeal: favoriteMeal,),
+        MealDetail.mealDetailScreen:(context)=>MealDetail(isMealfavoriteMeal: _isMealFavorite,togglefavoriteMeal: _toggleFavorite,),
+
         Flitter_Screen. filtterScreens:(context)=>Flitter_Screen(cuurentFilter:_filters,saveFilters:_setFilters),
       },
 
@@ -72,12 +93,12 @@ class _MyAppState extends State<MyApp> {
 
 
       theme: ThemeData(
-        primaryColor: Color(0xffff6b81),
-        accentColor: Color(0xfff1f2f6),
-        canvasColor:Color(0xfff1f2f6),
+        primaryColor: Color(0xFFC69B7B),
+        accentColor: Color(0xFFFDF6F0),
+        canvasColor:Color(0xFFFDF6F0),//f1f2f6,
 
      appBarTheme:AppBarTheme(
-       color: Color(0xffff6b81),
+       color: Color(0xffFAEDF0 ),//0xffff6b81
      ) ,
         textTheme:TextTheme(
           bodyText1: TextStyle(),

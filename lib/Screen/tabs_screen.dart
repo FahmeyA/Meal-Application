@@ -9,7 +9,8 @@ import 'favoirate_screen.dart';
 
 class TabsScreens extends StatefulWidget {
   List<Meal2> filterListMeal;
-   TabsScreens({Key? key,required this.filterListMeal}) : super(key: key);
+  List<Meal2> favoriterListMeal;
+   TabsScreens({Key? key,required this.filterListMeal,required this.favoriterListMeal}) : super(key: key);
   static final homeScreen="/";
   @override
   State<TabsScreens> createState() => _TabsScreensState();
@@ -38,7 +39,7 @@ class _TabsScreensState extends State<TabsScreens> {
       "title": "Catagoray"
     },
     {
-      "screen": FavoirateScreen(),
+      "screen": FavoirateScreen(favoriteMeals: widget.favoriterListMeal,),
       "title": "Favorite"
     }
 
@@ -46,42 +47,52 @@ class _TabsScreensState extends State<TabsScreens> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+      child: Scaffold(
 
-      backgroundColor: Theme.of(context).canvasColor,
-      appBar: AppBar(
-        title: Text(_screen![currentIndex]["title"],),
+        backgroundColor: Theme.of(context).canvasColor,
+        appBar:currentIndex==1? AppBar(
+          title: Text(_screen![currentIndex]["title"],),
+        ):null,
+
+        body: _screen![currentIndex]["screen"],
+
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Color(0xFFFDF6F0),
+          onTap: (val){
+             setState((){
+               currentIndex=val;
+              // currentIndex==0? isShowlabl==true:
+             });
+          },
+          selectedLabelStyle:     TextStyle(
+            color: Colors.black
+          ),
+         // showSelectedLabels: isShowlabl,
+         // showUnselectedLabels:isUnShowlabl ,
+          items: [
+
+
+         BottomNavigationBarItem(
+                label: "Catagoray",
+
+                icon: Icon(
+              Icons.category_outlined,
+              color: currentIndex==0?Colors.orange: Colors.black45,
+
+            )),
+            BottomNavigationBarItem(
+                label: "Favoirate",
+                icon: Icon(
+                  Icons.favorite_outlined,
+                  color: currentIndex==1?Colors.orange: Colors.black45,
+
+                ))
+          ],
+        ),
+
+        drawer: MyDrawer(),
       ),
-
-      body: _screen![currentIndex]["screen"],
-
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        onTap: (val){
-           setState((){
-             currentIndex=val;
-           });
-        },
-        items:const [
-
-       BottomNavigationBarItem(
-              label: "Catagoray",
-              icon: Icon(
-            Icons.category_outlined,
-            color: Colors.white,
-
-          )),
-          BottomNavigationBarItem(
-              label: "Favoirate",
-              icon: Icon(
-                Icons.favorite_outlined,
-                color: Colors.white,
-
-              ))
-        ],
-      ),
-
-      drawer: MyDrawer(),
     );
   }
 }

@@ -8,8 +8,10 @@ import '../dummy_data.dart';
 class CatagorayMealScreen extends StatefulWidget {
   String title;
   String id;
+      
+  static final routeName='/catagorayMealScreen';
   final List<Meal2> availableMeal;
-   CatagorayMealScreen({ required this.title, required this.id,required this.availableMeal}) ;
+   CatagorayMealScreen( this.title, this.id, this.availableMeal) ;
 
   @override
   State<CatagorayMealScreen> createState() => _CatagorayMealScreenState();
@@ -54,6 +56,9 @@ class _CatagorayMealScreenState extends State<CatagorayMealScreen> {
           itemCount: displayMeals.length,
           itemBuilder: (ctx,index){
         return  MealItem(
+              (va){
+            removIt(va);
+          },
             id: displayMeals[index].id,
             title: displayMeals[index].title,
             categories: displayMeals[index].categories,
@@ -63,9 +68,7 @@ class _CatagorayMealScreenState extends State<CatagorayMealScreen> {
             duration: displayMeals[index].duration,
             complexity:displayMeals[index].complexity,
             affordability: displayMeals[index].affordability,
-        removeItem:(va){
-               removIt(va);
-        },
+
         );
 
       }),
